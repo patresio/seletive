@@ -61,6 +61,8 @@
               <option value="M">Marketing</option>
               <option value="N">Nutrição</option>
               <option value="D">Design</option>
+              <option value="T">Tecnologia</option>
+              <option value="SP">Setor Publico</option>
             </select>
           </div>
         </div>
@@ -70,6 +72,9 @@
             <label>Tecnologias usadas:</label>
             <select class="form-control" name="tecnologias" multiple>
               <option value=""></option>
+              {% for tech in techs %}
+              <option value="{{tech.id}}">{{tech.tecnologia}}</option>
+              {% endfor %}
             </select>
           </div>
         </div>
