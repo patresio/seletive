@@ -57,5 +57,5 @@ def empresas(request):
 def excluirEmpresa(request, id):
     empresa = Empresa.objects.filter(id=id)
     empresa.delete()
-    messages.add_message(request, constants.SUCCESS, f'Empresa {empresa.nome} excluida com sucesso')
-    return redirect('empresas/')
+    messages.add_message(request, constants.SUCCESS, 'Empresa excluida com sucesso')
+    return redirect('')
