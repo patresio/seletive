@@ -1,15 +1,21 @@
 {% extends "base.html" %} {% load static %} {% block 'head' %}
 <link href="{% static 'empresa/css/novaEmpresa.css' %}" rel="stylesheet" />
 {% endblock %} {% block 'body' %}
-
 <div class="wrapper">
   <div class="box">
     <div class="header">
       <h3 class="titulo">Nova empresa</h3>
     </div>
-
+    {% if messages %} {% for message in messages %}
+    <section class="alert {{message.tags}}">{{message}}</section>
+    {% endfor %} {% endif %}
     <div class="body-box">
-      <form action="" method="" enctype="multipart/form-data">
+      <form
+        action="{% url 'novaEmpresa' %}"
+        method="POST"
+        enctype="multipart/form-data"
+      >
+        {% csrf_token %}
         <div class="row">
           <div class="col-md">
             <label>Nome:</label>
@@ -58,11 +64,10 @@
           <div class="col-md">
             <label>Nicho de mercado:</label>
             <select class="form-control" name="nicho">
-              <option value="M">Marketing</option>
-              <option value="N">Nutrição</option>
-              <option value="D">Design</option>
-              <option value="T">Tecnologia</option>
-              <option value="SP">Setor Publico</option>
+              <option value=""></option>
+              {% for nichoC, nichoName in nichosMercado %}
+              <option value="{{nichoC}}">{{nichoName}}</option>
+              {% endfor %}
             </select>
           </div>
         </div>

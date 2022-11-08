@@ -1,0 +1,74 @@
+.wrapper {
+  margin-top: 3%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.box {
+  width: 80vw;
+  background: #fff;
+  box-shadow: 0.3rem 0.3rem 0.625rem rgba(0, 0, 0, 0.3);
+}
+
+.titulo {
+  display: inline;
+}
+
+.btn-nova-empresa {
+  float: right;
+  text-decoration: none;
+  color: white;
+  background-color: #7d2948;
+  padding: 0.625rem;
+  border-radius: 0.625rem;
+  font-weight: bold;
+}
+
+.btn-nova-empresa:hover {
+  color: white;
+  text-decoration: none;
+  background-color: #631f38;
+}
+
+.btn-excluir:hover {
+  color: white;
+  text-decoration: none;
+  background-color: #631f38;
+}
+
+.header-box {
+  padding: 1.875rem;
+}
+
+.borda-box {
+  border-top: 0.06rem solid black;
+}
+
+.body-box {
+  padding: 1.875rem;
+}
+
+.btn-orange {
+  background-color: #ed8554;
+  color: white;
+}
+
+.tabela {
+  width: 100%;
+  margin-top: 1.25rem;
+}
+
+.tabela-linha {
+  background-color: #ede6e6;
+}
+
+.btn-excluir {
+  text-decoration: none;
+  color: white;
+  background-color: #7d2948;
+  padding: 0.625rem;
+  border-radius: 0.625rem;
+  font-weight: bold;
+}

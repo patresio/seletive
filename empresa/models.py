@@ -14,7 +14,8 @@ class Empresa(models.Model):
         ('N', 'Nutrição'),
         ('D', 'Design'),
         ('T', 'Tecnologia'),
-        ('SP', 'Setor Publico')
+        ('SP', 'Setor Publico'),
+        ('AM', 'Agencia de Modelo')
     )
     logo = models.ImageField(upload_to="logo_empresa", null=True)
     nome = models.CharField(max_length=30)
