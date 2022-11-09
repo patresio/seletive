@@ -23,15 +23,15 @@ def novaEmpresa(request):
 
         if (len(nome.strip()) == 0 or len(email.strip()) == 0 or len(cidade.strip()) == 0 or len(endereco.strip()) == 0 or len(nicho.strip()) == 0 or len(caracteristicas.strip()) == 0 or (not logo)): 
             messages.add_message(request, messages.ERROR, 'Preencha todos os campos')
-            return redirect('/empresas/novaEmpresa')
+            return redirect('novaEmpresa')
 
         if logo.size > 100_000_000:
             messages.add_message(request, constants.ERROR, 'A logo da empresa deve ter menos de 10MB')
-            return redirect('/empresas/novaEmpresa')
+            return redirect('novaEmpresa')
 
         if nicho not in [i[0] for i in Empresa.choices_nicho_mercado]:
             messages.add_message(request, constants.ERROR, 'Nicho de mercado inválido')
-            return redirect('/empresas/novaEmpresa')
+            return redirect('novaEmpresa')
 
         empresa = Empresa(
             logo=logo,
@@ -46,7 +46,7 @@ def novaEmpresa(request):
         empresa.save()
 
         messages.add_message(request, constants.SUCCESS, 'Empresa cadastrada com sucesso')
-        return redirect('/empresas/novaEmpresa')
+        return redirect('novaEmpresa')
 
 
 def empresas(request):
@@ -75,4 +75,5 @@ def empresa(request, id):
     status = Vagas.choices_status
     experiencia = Vagas.choices_experiencia
     tecnologias = Tecnologia.objects.all()
-    return render(request, 'empresaUnica.html', {'empresas': empresas,'empresa': empresaUnica, 'status': status, 'experiencia': experiencia, 'tecnologias': tecnologias})
+    vagas = Vagas.objects.filter(empresa_id=id)
+    return render(request, 'empresaUnica.html', {'vagas': vagas,'empresas': empresas,'empresa': empresaUnica, 'status': status, 'experiencia': experiencia, 'tecnologias': tecnologias})

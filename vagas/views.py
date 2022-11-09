@@ -1,6 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, Http404
 from empresa.models import Vagas
+from django.contrib import messages
+from django.contrib.messages import constants
 # Create your views here.
 
 def novaVaga(request):
@@ -25,5 +27,12 @@ def novaVaga(request):
 
         vaga.save()
         
+        vaga.tecnologias_estudar.add(*tecnologias_nao_domina)
+        vaga.tecnologias_dominadas.add(*tecnologias_domina)
+
+        vaga.save()
+        messages.add_message(request, constants.SUCCESS, 'Vaga criada com sucesso.')
+        return redirect(f'/empresa/{empresa}')
+
     elif request.method == "GET":
         raise Http404
