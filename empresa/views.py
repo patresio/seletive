@@ -1,8 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.messages import constants
-from .models import Tecnologia, Empresa
+from .models import Tecnologia, Empresa, Vagas
 
 # Create your views here.
 
@@ -50,8 +50,17 @@ def novaEmpresa(request):
 
 
 def empresas(request):
+    tecnologias_filtrar = request.GET.get('tecnologias')
+    nome_filtrar = request.GET.get('nome')
     empresas = Empresa.objects.all()
     tecnologias = Tecnologia.objects.all()
+
+    if tecnologias_filtrar:
+        empresas = empresas.filter(tecnologias=tecnologias_filtrar)
+    
+    if nome_filtrar:
+        empresas = empresas.filter(nome__icontains=nome_filtrar)
+    
     return render(request, 'empresas.html', {'empresas': empresas, 'tecnologias': tecnologias})
 
 def excluirEmpresa(request, id):
@@ -59,3 +68,11 @@ def excluirEmpresa(request, id):
     empresa.delete()
     messages.add_message(request, constants.SUCCESS, 'Empresa excluida com sucesso')
     return redirect('empresas')
+
+def empresa(request, id):
+    empresaUnica = get_object_or_404(Empresa, id=id)
+    empresas = Empresa.objects.all()
+    status = Vagas.choices_status
+    experiencia = Vagas.choices_experiencia
+    tecnologias = Tecnologia.objects.all()
+    return render(request, 'empresaUnica.html', {'empresas': empresas,'empresa': empresaUnica, 'status': status, 'experiencia': experiencia, 'tecnologias': tecnologias})

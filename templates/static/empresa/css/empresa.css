@@ -1,0 +1,43 @@
+.titulo {
+  color: #7d2948;
+  font-size: 3.125rem;
+  font-weight: bold;
+}
+
+.paragrafo {
+  font-size: 1.75rem;
+}
+
+.btn-orange {
+  background-color: #ed8554;
+  color: white;
+}
+
+.btn-orange:hover {
+  background-color: #e25a1b;
+  color: white;
+}
+
+label {
+  font-weight: bold;
+}
+
+.box-vagas {
+  width: 25rem;
+  margin-top: 0.234rem;
+  background-color: #ede6e6;
+}
+
+.header-vagas {
+  background-color: #7d2948;
+  padding: 0.938rem;
+  color: white;
+}
+
+.body-vagas {
+  padding: 0.938rem;
+}
+
+.paragrafo-orange {
+  color: #ed8554;
+}

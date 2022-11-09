@@ -1,4 +1,6 @@
-{% extends "base.html" %} {% load static %} {% block 'head' %}
+{% extends "base.html" %} {% load static %}{% block 'title'%} SELETI.VE -
+EMPRESAS {% endblock %} {% block 'head' %}
+
 <link href="{% static 'empresa/css/novaEmpresa.css' %}" rel="stylesheet" />
 {% endblock %} {% block 'body' %}
 <div class="wrapper">
@@ -100,7 +102,7 @@
         <br />
         <input
           type="submit"
-          value="Nova empresa"
+          value="Cadastrar Nova Empresa"
           class="btn btn-lg btn-orange"
         />
       </form>

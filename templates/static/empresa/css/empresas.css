@@ -55,6 +55,11 @@
   color: white;
 }
 
+.btn-orange:hover {
+  background-color: #e25a1b;
+  color: white;
+}
+
 .tabela {
   width: 100%;
   margin-top: 1.25rem;

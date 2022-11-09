@@ -1,4 +1,5 @@
-{% extends 'base.html' %}{% load static %}{% load filtro %}{% block 'head' %}
+{% extends 'base.html' %}{% load static %}{% load filtro %}{% block 'title'%}
+SELETI.VE - EMPRESAS {% endblock %}{% block 'head' %}
 <link href="{% static 'empresa/css/empresas.css' %}" rel="stylesheet" />
 {% endblock%} {% block 'body' %}
 <div class="wrapper">
@@ -9,12 +10,13 @@
       {% endfor %} {% endif %}
       <h2 class="titulo">Gerenciar empresas</h2>
       <a class="btn-nova-empresa" href="{% url 'novaEmpresa' %}"
-        >Nova empresa</a
+        >Adicionar Empresa</a
       >
     </div>
     <div class="borda-box"></div>
     <div class="body-box">
-      <form>
+      <form action="{% url 'empresas' %}" method="GET">
+        {% csrf_token %}
         <div class="row">
           <div class="col-md-5">
             <input
@@ -27,14 +29,19 @@
 
           <div class="col-md-4">
             <select class="form-select" name="tecnologias">
-              <option value="">--------</option>
+              <option value=""></option>
+              {% for tecnologia in tecnologias %}
+              <option value="{{tecnologia.id}}">
+                {{tecnologia.tecnologia}}
+              </option>
+              {% endfor %}
             </select>
           </div>
 
           <div class="col-md-3">
             <input
               type="submit"
-              value="FILTRAR"
+              value="FILTRAR VAGAS"
               class="btn btn-lg btn-orange"
             />
           </div>
@@ -49,12 +56,19 @@
           <th>Quantidade de vagas</th>
           <th>Ação</th>
         </tr>
-          {% for empresa in empresas %} {% if not forloop.counter|is_par %}
-		  <tr class="tabela-linha">
+        {% for empresa in empresas %} {% if not forloop.counter|is_par %}
+        <tr class="tabela-linha">
           {% else %}
-          <tr class="">
+        </tr>
+
+        <tr class="">
           {% endif %}
-          <td>{{empresa.nome}}</td>
+
+          <td>
+            <a href="{% url 'empresa' empresa.id %}" class="link-secondary"
+              ><span>{{empresa.nome}}</span></a
+            >
+          </td>
           <td>{{empresa.endereco}}</td>
           <td>
             <select class="form-select">
@@ -63,9 +77,25 @@
               {% endfor %}
             </select>
           </td>
-          <td>Quantidade de vagas</td>
           <td>
-            <a class="btn-excluir" href="{% url 'excluirEmpresa' empresa.id %}">Excluir</a>
+            {% if empresa.qtde_vagas > 0 %}
+            <img
+              src="{% static 'empresa/img/flag_green.png' %}"
+              alt="Bandeira Verde"
+              class=""
+            />
+            &nbsp&nbsp {{empresa.qtde_vagas}} Vagas {% else %}
+            <img
+              src="{% static 'empresa/img/flag_red.png' %}"
+              alt="Bandeira Vermelha"
+              class=""
+            />
+            &nbsp&nbsp Não há Vagas {% endif %}
+          </td>
+          <td>
+            <a class="btn-excluir" href="{% url 'excluirEmpresa' empresa.id %}"
+              >Excluir</a
+            >
           </td>
         </tr>
         {% endfor %}
