@@ -1,3 +1,25 @@
+a:active {
+  color: #c9c3c3;
+  text-decoration: none;
+}
+
+a:link {
+  color: #c9c3c3;
+  text-decoration: none;
+}
+
+a:visited {
+  color: #c9c3c3;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #c9c3c3;
+  font-weight: bold;
+  text-decoration: none;
+  background-color: #3b0032;
+}
+
 .titulo {
   color: #7d2948;
   font-size: 3.125rem;

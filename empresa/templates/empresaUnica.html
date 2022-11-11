@@ -59,13 +59,14 @@
     class="btn btn-lg btn-orange"
     >Nova vaga</a
   >
-
-  <div class="row">
+   <br />
+   <br />
+   <div class="row">
     {% for vaga in vagas %}
     <div class="col-md">
       <div class="box-vagas">
         <div class="header-vagas">
-          {{vaga.titulo}}
+          <a href="{% url 'vaga' vaga.id %}">{{vaga.titulo}}</a>
         </div>
         <div class="body-vagas">
           <div class="row">
@@ -112,6 +113,7 @@
           data-bs-dismiss="modal"
           aria-label="Close"
         ></button>
+       
       </div>
       <div class="modal-body">
         <form action="{% url 'novaVaga' %}" method="POST">
