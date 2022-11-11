@@ -135,4 +135,4 @@ MESSAGE_TAGS = {
 # Email
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-EMAIL_HOST_USER = "seu_email@email.com.br"
+EMAIL_HOST_USER = "patresio@gmail.com"

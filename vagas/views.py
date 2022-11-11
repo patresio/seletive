@@ -3,7 +3,11 @@ from django.http import HttpResponse, Http404
 from empresa.models import Vagas
 from django.contrib import messages
 from django.contrib.messages import constants
-from .models import Tarefa
+from .models import Tarefa, Emails
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+from django.core.mail import EmailMultiAlternatives
+from django.conf import settings
 # Create your views here.
 
 def novaVaga(request):
@@ -42,10 +46,12 @@ def novaVaga(request):
 def vaga(request, pk):
     vaga = get_object_or_404(Vagas, id=pk)
     tarefas = Tarefa.objects.filter(vaga=vaga).filter(realizada=False)
-
+    emails = Emails.objects.filter(vaga=vaga)
+    
     context = {
         'vaga': vaga,
         'tarefas': tarefas,
+        'emails': emails
     }
     return render(request, 'vaga.html', context)
 
@@ -86,3 +92,35 @@ def realizarTarefa(request, pk):
 
     messages.add_message(request, messages.SUCCESS, 'Tarefa realizada com sucesso')
     return redirect(f'/vagas/vaga/{tarefa.vaga_id}')
+
+
+def enviaEmail(request, pk_vaga):
+    vaga = Vagas.objects.get(id=pk_vaga)
+    assunto = request.POST.get('assunto')
+    corpo = request.POST.get('corpo')
+
+    html_content = render_to_string('emails/templateEmail.html')
+    text_content = strip_tags(html_content)
+    email = EmailMultiAlternatives(assunto, text_content, settings.EMAIL_HOST_USER, [vaga.email,])
+
+    email.attach_alternative(html_content, "text/html")
+
+    if email.send():
+        mail = Emails(
+        vaga=vaga,
+        assunto=assunto,
+        corpo=corpo,
+        enviado=True
+        )
+        mail.save()
+        messages.add_message(request, messages.SUCCESS, 'Email enviado com sucesso')
+        return redirect(f'/vagas/vaga/{pk_vaga}')
+    else:
+        mail = Emails(
+        vaga=vaga,
+        assunto=assunto,
+        corpo=corpo,
+        enviado=False
+         )
+        messages.add_message(request, messages.ERROR, 'Erro interno do sistema!')
+        return redirect(f'/vagas/vaga/{pk_vaga}')
