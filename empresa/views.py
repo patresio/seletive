@@ -63,14 +63,17 @@ def empresas(request):
     
     return render(request, 'empresas.html', {'empresas': empresas, 'tecnologias': tecnologias})
 
-def excluirEmpresa(request, id):
-    empresa = Empresa.objects.filter(id=id)
-    empresa.delete()
-    messages.add_message(request, constants.SUCCESS, 'Empresa excluida com sucesso')
-    return redirect('empresas')
+def excluirEmpresa(request, pk):
+    empresa = Empresa.objects.filter(id=pk)
+    if not empresa.delete():
+        messages.add_message(request, messages.ERROR, 'Não foi possível excluir empresa')
+        return redirect('empresas')
+    elif empresa.delete():
+        messages.add_message(request, constants.SUCCESS, 'Empresa excluida com sucesso')
+        return redirect('empresas')
 
-def empresa(request, id):
-    empresaUnica = get_object_or_404(Empresa, id=id)
+def empresa(request, pk):
+    empresaUnica = get_object_or_404(Empresa, id=pk)
     empresas = Empresa.objects.all()
     status = Vagas.choices_status
     experiencia = Vagas.choices_experiencia

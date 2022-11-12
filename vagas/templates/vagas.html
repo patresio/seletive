@@ -1,0 +1,31 @@
+{% extends 'base.html' %} {% load static %} {% block 'title' %}SELETI.VE - VAGAS{% endblock %} {% block 'head' %}
+<link href="{% static 'empresa/css/empresa.css' %}" rel="stylesheet" />
+{% endblock%} {% block 'body' %}
+<div class="container">
+<div class="row">
+    {% for vaga in vagas %}
+    <div class="col-md">
+      <div class="box-vagas">
+        <div class="header-vagas">
+          <a href="{% url 'vaga' vaga.id %}">{{vaga.titulo}}</a>
+        </div>
+        <div class="body-vagas">
+          <div class="row">
+            <div class="col-md">
+              <label class="paragrafo">Nível:</label>
+              <br>        
+              <label class="paragrafo paragrafo-orange">{{vaga.get_nivel_experiencia_display}}</label>                           
+            </div>
+            <div class="col-md">
+              <label class="paragrafo">Status <img src="{% static 'empresa/img/flag_green.png' %}"></label>
+              <br>        
+              <label class="paragrafo paragrafo-orange">{{vaga.get_status_display}}</label>                           
+            </div>
+          </div>
+        </div>    
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

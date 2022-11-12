@@ -10,6 +10,12 @@ from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
 # Create your views here.
 
+# VAGAS ----
+def vagas(request):
+    vagas = Vagas.objects.all()
+    return render(request, 'vagas.html', {'vagas': vagas})
+
+
 def novaVaga(request):
     if request.method == "POST":
         titulo = request.POST.get('titulo')
@@ -56,6 +62,8 @@ def vaga(request, pk):
     return render(request, 'vaga.html', context)
 
 
+# TAREFAS --- 
+
 def novaTarefa(request, pk_vaga):
     titulo = request.POST.get('titulo')
     prioridade = request.POST.get('prioridade')
@@ -93,6 +101,8 @@ def realizarTarefa(request, pk):
     messages.add_message(request, messages.SUCCESS, 'Tarefa realizada com sucesso')
     return redirect(f'/vagas/vaga/{tarefa.vaga_id}')
 
+
+# EMAILS ---
 
 def enviaEmail(request, pk_vaga):
     vaga = Vagas.objects.get(id=pk_vaga)
